@@ -1,6 +1,14 @@
 // Your jQuery goes here
-
-var userData = {
+ var userData={};
+ if(localStorage.getItem('userData')){
+ 	userData=JSON.parse(localStorage.getItem('userData'));
+ 	$('.question').hide();
+ 	$('#'+userData.currentQuestion).show();
+ 	$("#name").val(userData.name);
+ 	$("#email").val(userData.email);
+ }
+ else{
+    userData = {
 	name:"",
 	email:"",
 	html:{likes:[],dislikes:[]},
@@ -8,7 +16,10 @@ var userData = {
 	js:{likes:[],dislikes:[]},
 	strengths:{html:"",css:"",js:""},
 	currentQuestion:"welcome"
-};
+ };
+localStorage.setItem('userData',JSON.stringify(userData));
+}
+
 
 $("#startBtn").click(function(event){
 	$("#welcome").hide();
@@ -34,6 +45,8 @@ $("#email").change(function(event){
 $("#q2Next").click(function(event){
 	userData.name=$("#name").val();
 	userData.name=$("#email").val();
+	userData.currentQuestion="q1";
+	localStorage.setItem('userData',JSON.stringify(userData));
 	$("#q1").hide();
 	$("#q2").show();
 
